@@ -1,0 +1,67 @@
+/* General navbar styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.menu {
+    position: relative;
+}
+
+/* Dropdown button */
+.dropdown-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-btn img {
+    width: 30px; /* Adjust size of the menu icon */
+}
+
+/* Dropdown menu */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 160px;
+    border-radius: 5px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Show dropdown when the button is clicked */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Sign In button */
+.signin button {
+    background-color: #4b4bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.signin button:hover {
+    background-color: #333;
+}
