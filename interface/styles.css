@@ -42,16 +42,32 @@
     border-radius: 5px;
 }
 
+
 .dropdown-content a {
     color: black;
-    padding: 12px 27px;
+    padding: 12px 30px;
     text-decoration: none;
     display: block;
+    border-radius: 1px;
+   
+
 }
 
 .dropdown-content a:hover {
     background-color: #ddd;
+    padding: 12px 30px;
+    
 }
+
+.dropdown-btn .left-icon, .dropdown-btn .right-icon {
+    position: relative;
+    display: inline-block;
+    width: 15px;
+    background-color: #fff;
+    border-radius: 40px;
+}
+
+
 
 /* Show dropdown when the button is clicked */
 .dropdown:hover .dropdown-content {
@@ -59,9 +75,21 @@
 }
 
 /* Rotate the dropdown icon when clicked */
-.dropdown.open .dropdown-btn {
-    
+.dropdown:hover .dropdown-btn {
+    animation-name: spin;
+    animation-duration: 1s;
 }
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
 
 /* Sign In button */
 .signin button {

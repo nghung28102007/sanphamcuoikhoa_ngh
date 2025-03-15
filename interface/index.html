@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar with Dropdown</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        
+    </style>
 </head>
 <body>
     <div class="navbar">
@@ -15,9 +19,10 @@
         <div class="menu">
             <div class="dropdown">
                 <button class="dropdown-btn">
-                    <img src="/img/menu.png" alt="Menu Icon" style="width: 50px; height: 50px;" />
+                    <span class="left-icon"></span>
+                    <span class="right-icon"></span>
                 </button>
-                <div class="dropdown-content">
+                <div class="dropdown-content"> 
                     <a href="#">MindX Football</a>
                     <a href="#">Tickets</a>
                     <a href="#">Tour</a>
@@ -29,13 +34,11 @@
         <div class="extra-menu">
             <a href="#">Fan</a>
             <a href="#">Tickets</a>
-            <a href="#">Hospitality</a>
             <a href="#">Tour</a>
             <a href="#">Shop</a>
-            <a href="#">RM Play</a>
         </div>
         <div class="signin" style="margin-left: auto;">
-            <a href="signin.html"><button onclick="authenticate()">Sign In</button></a>
+            <a href="/authenticate/signin.html"><button>Sign In</button></a>
         </div>
     </div>
 
@@ -47,10 +50,16 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
+    <!-- <script>
         function authenticate() {
             // Add your authentication logic here
             showModal('Authentication successful');
+            setTimeout(() => {
+                closeModal()
+                setTimeout(() => {
+                    window.location.href = '/interface/index.html'; 
+                }, 0); // Không cần delay để phù hợp với transition
+            }, 2000);
         }
 
         function signUp() {
@@ -60,6 +69,17 @@
                 window.location.href = 'signin.html'; // Redirect to sign-in page after sign-up
             }, 2000);
         }
+
+        function showModal(message) {
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('success-modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('success-modal').style.display = 'none';
+        }
+
+        document.querySelector('.close-btn').addEventListener('click', closeModal); -->
     </script>
 </body>
 </html>
