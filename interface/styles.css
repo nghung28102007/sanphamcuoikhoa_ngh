@@ -1,10 +1,10 @@
-/* General navbar styling */
+/* Kiểu dáng chung cho thanh điều hướng */
 .navbar {
     display: flex;
     align-items: center;
     padding: 10px 20px;
-    background-color: #fff;
-    border-bottom: 1px solid #ccc;
+    background-color: #f8f9fa; /* Màu nền xám nhạt cho thanh điều hướng */
+    border-bottom: 1px solid #dee2e6; /* Đường viền xám nhạt */
 }
 
 .extra-menu {
@@ -13,71 +13,114 @@
     width: 78%;
 }
 
-.menu {
+.box {
     position: relative;
+    width: fit-content;
+    height: fit-content;
 }
 
-/* Dropdown button */
-.dropdown-btn {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.3s ease; /* Add transition for the icon */
-}
-
-.dropdown-btn img {
-    width: 30px; /* Adjust size of the menu icon */
-}
-
-/* Dropdown menu */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 40px;
-    right: 0;
-    background-color: white;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    min-width: 160px;
+.dropdown {
+    position: relative;
+    width: 150px;
+    height: fit-content;
+    background: #343a40; /* Màu nền xám đậm cho dropdown */
+    color: #ffffff; /* Màu chữ trắng */
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 30px;
-    text-decoration: none;
-    display: block;
-    border-radius: 1px;
-   
-
-}
-
-.dropdown-content a:hover {
-    background-color: #ddd;
-    padding: 12px 30px;
-    
-}
-
-.dropdown-btn .left-icon, .dropdown-btn .right-icon {
+.dropdown .left-icon,
+.dropdown .right-icon {
     position: relative;
+    top: 2px;
     display: inline-block;
     width: 15px;
-    background-color: #fff;
+    height: 5px;
+    background: #ffffff; /* Màu trắng cho biểu tượng */
     border-radius: 40px;
+    transition: .5s;
 }
 
-
-
-/* Show dropdown when the button is clicked */
-.dropdown:hover .dropdown-content {
-    display: block;
+.dropdown .left-icon {
+    left: 7px;
+    transform: rotate(45deg);
 }
 
-/* Rotate the dropdown icon when clicked */
-.dropdown:hover .dropdown-btn {
-    animation-name: spin;
-    animation-duration: 1s;
+.dropdown.active .left-icon {
+    transform: rotate(135deg);
+}
+
+.dropdown .right-icon {
+    transform: rotate(-45deg);
+}
+
+.dropdown.active .right-icon {
+    transform: rotate(-135deg);
+}
+
+.dropdown .items {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto; /* Điều chỉnh chiều cao để phù hợp với nội dung */
+    margin-top: 63px;
+    overflow: hidden;
+    visibility: hidden;
+    transition: .5s;
+}
+
+.dropdown.active .items {
+    visibility: visible;
+}
+
+.dropdown .items a {
+    position: relative;
+    left: 100%;
+    display: flex;
+    font-size: 20px;
+    background: #ffffff; /* Màu nền trắng cho các mục dropdown */
+    color: #343a40; /* Màu chữ xám đậm */
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-top: 2.5px;
+    z-index: 1;
+    overflow: hidden;
+    transition: .5s;
+    transition-delay: calc(60ms * var(--i));
+}
+
+.dropdown.active .items a {
+    left: 0;
+}
+
+.dropdown .items a:hover {
+    color: #ffffff; /* Màu chữ trắng khi hover */
+    background: #495057; /* Màu nền xám nhạt hơn khi hover */
+}
+
+.dropdown .items a span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #6c757d; /* Màu nền xám trung bình cho span */
+    z-index: -1;
+    border-radius: inherit;
+    transform: rotate(160deg);
+    transform-origin: right;
+    transition: .5s;
+}
+
+.dropdown .items a:hover span {
+    transform: rotate(0deg);
 }
 
 @keyframes spin {
@@ -89,11 +132,38 @@
     }
 }
 
+/* @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+} */
+
+@keyframes slide-in {
+    0% {
+        transform: translateX(-100%);
+
+    }
+    100% {
+        transform: translateX(0);
+        
+    }
+}
+
+body {
+    animation: slide-in 2s ease-in;
+}
 
 
-/* Sign In button */
+
+/* Nút Đăng nhập */
 .signin button {
-    background-color: #4b4bff;
+    background-color: #343a40; /* Màu nền xám đậm cho nút */
     color: white;
     padding: 10px 15px;
     border: none;
@@ -102,7 +172,7 @@
 }
 
 .signin button:hover {
-    background-color: #333;
+    background-color: #495057; /* Màu xám nhạt hơn khi hover */
 }
 
 a {
@@ -112,10 +182,10 @@ a {
 
 .extra-menu a:hover {
     transform: scale(1.2);
-    color: blue;
+    color: #007bff; /* Màu xanh khi hover */
 }
 
-/* Modal box styling */
+/* Kiểu dáng hộp thoại modal */
 .modal {
     display: none;
     position: fixed;
@@ -125,12 +195,11 @@ a {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.4); /* Nền đen bán trong suốt */
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: #ffffff; /* Nền trắng cho modal */
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
@@ -152,4 +221,67 @@ a {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.logo {
+    margin-right: 20px; /* Thêm khoảng cách bên phải của logo */
+}
+
+.input-container {
+    position: relative;
+    margin: 10px 0;
+}
+
+.input-container label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+    padding: 0 5px;
+    color: #aaa;
+    transition: 0.3s ease;
+    pointer-events: none;
+}
+
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    color: #00529f;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.input-container input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+}
+
+input:invalid {
+    border-color: red;
+}
+
+input:valid {
+    border-color: green;
+}
+
+.requirements {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 5px;
+}
+
+.requirements p {
+    margin: 0;
+}
+
+.requirements .valid {
+    color: green;
+}
+
+.requirements .invalid {
+    color: red;
 }

@@ -36,15 +36,13 @@
         }
         .left-icon, .right-icon {
             display: inline-block;
-            width: 0;
-            height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 5px solid black;
             transition: transform 0.3s;
         }
-        .dropdown:hover .left-icon, .dropdown:hover .right-icon {
-            transform: rotate(180deg);
+        .rotate-left {
+            transform: rotate(-90deg);
+        }
+        .rotate-right {
+            transform: rotate(90deg);
         }
         .loading {
             display: none;
@@ -66,6 +64,7 @@
             transform: translate(-50%, -50%);
             content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle fill="%23FF156D" stroke="%23FF156D" stroke-width="15" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="%23FF156D" stroke="%23FF156D" stroke-width="15" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="%23FF156D" stroke="%23FF156D" stroke-width="15" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>');
         }
+        
     </style>
 </head>
 <body>
@@ -93,8 +92,14 @@
             <a href="#"><span></span>Shop</a>
         </div>
         <div class="signin" style="margin-left: auto;">
-            <a href="/authenticate/signin.html" id="sign-in-btn"><button>Sign In</button></a>
-            <button id="sign-out-btn" style="display: none;" onclick="signOut()">Sign Out</button>
+            <button id="sign-out-btn" onclick="signOut()">Sign Out</button>
+        </div>
+    </div>
+
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p id="modal-message"></p>
         </div>
     </div>
 
@@ -102,10 +107,10 @@
         <img alt="Loading...">
     </div>
 
-    <div id="success-modal" class="modal">
+    <div id="logout-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <p id="modal-message"></p>
+            <p id="logout-message">Đăng xuất thành công!</p>
         </div>
     </div>
 
@@ -113,31 +118,24 @@
     <script>
         function signOut() {
             // Show success modal
-            const successModal = document.getElementById('success-modal');
-            const modalMessage = document.getElementById('modal-message');
-            modalMessage.textContent = 'Logged out successfully!';
-            successModal.style.display = 'block';
+            const logoutModal = document.getElementById('logout-modal');
+            const modalMessage = document.getElementById('logout-message');
+            modalMessage.textContent = 'Đăng xuất thành công!';
+            logoutModal.style.display = 'block';
 
             // Show loading effect after success modal
             setTimeout(() => {
-                successModal.style.display = 'none';
+                logoutModal.style.display = 'none';
                 document.getElementById('loading').style.display = 'block';
 
                 setTimeout(() => {
                     window.location.href = '/authenticate/signin.html';
-                }, 2000); 
-            }, 2000); 
-        }
-
-        // Check if user is logged in
-        function checkLoginStatus() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            document.getElementById('sign-in-btn').style.display = isLoggedIn ? 'none' : 'block';
-            document.getElementById('sign-out-btn').style.display = isLoggedIn ? 'block' : 'none';
+                }, 2000); // Redirect after 2 seconds
+            }, 2000); // Show loading after 2 seconds
         }
 
         function closeModal() {
-            document.getElementById('success-modal').style.display = 'none';
+            document.getElementById('logout-modal').style.display = 'none';
             document.getElementById('loading').style.display = 'none';
         }
     </script>

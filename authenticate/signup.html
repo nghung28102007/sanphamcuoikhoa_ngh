@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Real Madrid</title>
+    <title>Đăng Ký - MindX Football</title>
     <link rel="stylesheet" href="/interface/styles.css">
     <style>
         body {
@@ -11,6 +11,7 @@
             background-color: #ffffff;
             color: #000000;
             text-align: center;
+            animation: slide-in 1s ease-out;
         }
         .signup-container {
             max-width: 400px;
@@ -90,27 +91,126 @@
             text-decoration: none;
             cursor: pointer;
         }
+        .requirements p {
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        .valid {
+            color: green;
+        }
+        .invalid {
+            color: red;
+        }
+        .loading {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            height: 100%;
+            width: 100%;
+            overflow: show;
+            margin: auto;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+        .loading img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle fill="%23FF156D" stroke="%23FF156D" stroke-width="15" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="%23FF156D" stroke="%23FF156D" stroke-width="15" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="%23FF156D" stroke="%23FF156D" stroke-width="15" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>');
+        }
     </style>
 </head>
 <body>
     <div class="signup-container">
         <img src="/img/DALL·E 2025-03-09 14.15.41 - A sleek and modern logo for a football team called 'MindX Football Team'. The design should feature a bold and futuristic font for 'MindX', with the w.webp" alt="Real Madrid Logo" class="logo">
-        <h1>Sign Up</h1>
+        <h1>Đăng Ký</h1>
         <form onsubmit="event.preventDefault(); signUp();">
-            <input type="text" placeholder="Username" required>
-            <input type="email" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-            <input type="password" placeholder="Password" required>
-            <button type="submit">Sign Up</button>
+            <div class="input-container">
+                <input type="text" placeholder=" " required>
+                <label>Tên đăng nhập</label>
+            </div>
+            <div class="input-container">
+                <input type="email" placeholder=" " required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                <label>Email</label>
+            </div>
+            <div class="input-container">
+                <input type="password" id="password" placeholder=" " required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}">
+                <label>Mật khẩu</label>
+                <div id="password-requirements" class="requirements">
+                    <p id="length" class="invalid">Ít nhất 8 ký tự</p>
+                    <p id="uppercase" class="invalid">Ít nhất một chữ cái viết hoa</p>
+                    <p id="lowercase" class="invalid">Ít nhất một chữ cái viết thường</p>
+                    <p id="number" class="invalid">Ít nhất một chữ số</p>
+                    <p id="special" class="invalid">Ít nhất một ký tự đặc biệt (@$!%*?&)</p>
+                </div>
+            </div>
+            <button type="submit" onclick="(signUp)">Đăng Ký</button>
         </form>
-        <p>Already have an account? <a href="signin.html">Sign In</a></p>
-        <a href="/interface/index.html" class="back-btn">Back</a>
+        <p>Đã có tài khoản? <a href="signin.html">Đăng Nhập</a></p>
+        <a href="/interface/before.html" class="back-btn">Quay lại</a>
+    </div>
+    <div class="loading" id="loading">
+        <img alt="Loading...">
     </div>
     <div id="success-modal" class="modal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
             <p id="modal-message"></p>
         </div>
     </div>
-    <script src="/interface/script.jsx"></script>
+    <script src="/interface/script.js"></script>
+    <script>
+        const passwordInput = document.getElementById('password');
+        const lengthRequirement = document.getElementById('length');
+        const uppercaseRequirement = document.getElementById('uppercase');
+        const lowercaseRequirement = document.getElementById('lowercase');
+        const numberRequirement = document.getElementById('number');
+        const specialRequirement = document.getElementById('special');
+
+        passwordInput.addEventListener('input', function() {
+            const value = passwordInput.value;
+            lengthRequirement.classList.toggle('valid', value.length >= 8);
+            lengthRequirement.classList.toggle('invalid', value.length < 8);
+
+            uppercaseRequirement.classList.toggle('valid', /[A-Z]/.test(value));
+            uppercaseRequirement.classList.toggle('invalid', !/[A-Z]/.test(value));
+
+            lowercaseRequirement.classList.toggle('valid', /[a-z]/.test(value));
+            lowercaseRequirement.classList.toggle('invalid', !/[a-z]/.test(value));
+
+            numberRequirement.classList.toggle('valid', /\d/.test(value));
+            numberRequirement.classList.toggle('invalid', !/\d/.test(value));
+
+            specialRequirement.classList.toggle('valid', /[@$!%*?&]/.test(value));
+            specialRequirement.classList.toggle('invalid', !/[@$!%*?&]/.test(value));
+        });
+
+        function signUp() {
+            // Show success modal
+            const successModal = document.getElementById('success-modal');
+            const modalMessage = document.getElementById('modal-message');
+            modalMessage.textContent = 'Đăng ký thành công! Đang chuyển hướng đến trang đăng nhập...';
+            successModal.style.display = 'block';
+
+            // Show loading effect after success modal
+            setTimeout(() => {
+                successModal.style.display = 'none';
+                document.getElementById('loading').style.display = 'block';
+
+                setTimeout(() => {
+                    localStorage.setItem('isLoggedIn', 'true');
+                    window.location.href = 'signin.html';
+                }, 2000); // Redirect after 2 seconds
+            }, 2000); // Show loading after 2 seconds
+        }
+
+        function closeModal() {
+            document.getElementById('success-modal').style.display = 'none';
+            document.getElementById('loading').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

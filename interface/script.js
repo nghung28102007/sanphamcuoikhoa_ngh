@@ -1,16 +1,23 @@
+const dropdown = document.querySelector('.dropdown');
+
+dropdown.addEventListener('click', () => {
+    dropdown.classList.toggle('active');
+});
+    
+    
     const modal = document.getElementById('success-modal');
     const closeBtn = document.querySelector('.close-btn');
     const modalMessage = document.getElementById('modal-message');
 
     closeBtn.addEventListener('click', function() {
         modal.style.display = 'none';
-        window.location.href = '/interface/index.html'; // Redirect to index.html
+        window.location.href = '/interface/before.html'; // Redirect to index.html
     });
 
     window.addEventListener('click', function(event) {
         if (event.target == modal) {
             modal.style.display = 'none';
-            window.location.href = '/interface/index.html'; // Redirect to index.html
+            window.location.href = '/interface/before.html'; // Redirect to index.html
         }
     });
 
@@ -26,21 +33,13 @@ function closeModal() {
     document.getElementById('success-modal').style.display = 'none';
 }
 
-function authenticate() {
+function signIn() {
     showModal('Đăng nhập thành công');
     setTimeout(() => {
         closeModal();
-        document.body.classList.add('fade-out');
-        setTimeout(() => {
-        }, 3000);
-    }, 3000);
+        window.location.href = '/interface/after.html'; // Redirect to index page after authentication
+    }, 2000); // Delay for 2 seconds before redirecting
 }
 
-function signUp() {
-    showModal('Đăng ký thành công');
-    setTimeout(() => {
-        window.location.href = '/interface/signin.html'; // Redirect to sign-in page after sign-up
-    }, );
-}
 
 

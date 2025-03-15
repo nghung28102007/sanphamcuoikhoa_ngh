@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - Real Madrid</title>
+    <title>Đăng nhập - MindX Football</title>
     <link rel="stylesheet" href="/interface/styles.css">
     <style>
         body {
@@ -11,6 +11,7 @@
             background-color: #ffffff;
             color: #000000;
             text-align: center;
+            animation: slide-in 1s ease-out;
         }
         .signin-container {
             max-width: 400px;
@@ -90,26 +91,79 @@
             text-decoration: none;
             cursor: pointer;
         }
+        .loading {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            height: 100%;
+            width: 100%;
+            overflow: show;
+            margin: auto;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+        .loading img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle fill="%23FF156D" stroke="%23FF156D" stroke-width="15" r="15" cx="40" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate></circle><circle fill="%23FF156D" stroke="%23FF156D" stroke-width="15" r="15" cx="100" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.2"></animate></circle><circle fill="%23FF156D" stroke="%23FF156D" stroke-width="15" r="15" cx="160" cy="65"><animate attributeName="cy" calcMode="spline" dur="2" values="65;135;65;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="0"></animate></circle></svg>');
+        }
     </style>
 </head>
 <body>
     <div class="signin-container">
         <img src="/img/DALL·E 2025-03-09 14.15.41 - A sleek and modern logo for a football team called 'MindX Football Team'. The design should feature a bold and futuristic font for 'MindX', with the w.webp" alt="Real Madrid Logo" class="logo">
-        <h1>Sign In</h1>
-        <form onsubmit="event.preventDefault(); authenticate();">
-            <input type="text" placeholder="Username" required>
-            <input type="password" placeholder="Password" required>
-            <button type="submit">Sign In</button>
+        <h1>Đăng nhập</h1>
+        <form onsubmit="event.preventDefault(); signIn();">
+            <div class="input-container">
+                <input type="text" placeholder=" " required>
+                <label>Tên đăng nhập</label>
+            </div>
+            <div class="input-container">
+                <input type="password" placeholder=" " required>
+                <label>Mật khẩu</label>
+            </div>
+            <button type="submit">Đăng nhập</button>
         </form>
-        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
-        <a href="/interface/index.html" class="back-btn">Back</a>
+        <p>Chưa có tài khoản? <a href="signup.html">Đăng ký</a></p>
+        <a href="/interface/before.html" class="back-btn">Quay lại</a>
+    </div>
+    <div class="loading" id="loading">
+        <img alt="Loading...">
     </div>
     <div id="success-modal" class="modal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <p id="modal-message"></p>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <p id="modal-message">Đăng nhập thành công! Đang chuyển hướng...</p>
         </div>
     </div>
     <script src="/interface/script.js"></script>
+    <script>
+        function signIn() {
+            // Show success modal
+            const successModal = document.getElementById('success-modal');
+            const modalMessage = document.getElementById('modal-message');
+            modalMessage.textContent = 'Đăng nhập thành công! Đang chuyển hướng...';
+            successModal.style.display = 'block';
+
+            // Show loading effect after success modal
+            setTimeout(() => {
+                successModal.style.display = 'none';
+                document.getElementById('loading').style.display = 'block';
+
+                setTimeout(() => {
+                    window.location.href = '/interface/after.html';
+                }, 2000); // Redirect after 2 seconds
+            }, 2000); // Show loading after 2 seconds
+        }
+
+        function closeModal() {
+            document.getElementById('success-modal').style.display = 'none';
+            document.getElementById('loading').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
