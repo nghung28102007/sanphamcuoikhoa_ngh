@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập - MindX Football</title>
-    <link rel="stylesheet" href="/interface/styles.css">
+    <title>Đăng Nhập - MindX Football</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
             background-color: #ffffff;
             color: #000000;
             text-align: center;
-            animation: slide-in 1s ease-out;
         }
         .signin-container {
             max-width: 400px;
@@ -29,12 +29,31 @@
             margin-bottom: 20px;
             color: #00529f;
         }
-        input[type="text"], input[type="password"] {
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .form-group input {
             width: calc(100% - 20px);
             padding: 10px;
-            margin: 10px 0;
             border: 1px solid #e0e0e0;
             border-radius: 5px;
+            outline: none;
+        }
+        .form-group label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #aaa;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label {
+            top: -20px; /* Adjusted to rise higher */
+            left: 10px;
+            font-size: 12px;
+            color: #00529f;
         }
         button {
             width: 100%;
@@ -115,54 +134,73 @@
 </head>
 <body>
     <div class="signin-container">
-        <img src="/img/DALL·E 2025-03-09 14.15.41 - A sleek and modern logo for a football team called 'MindX Football Team'. The design should feature a bold and futuristic font for 'MindX', with the w.webp" alt="Real Madrid Logo" class="logo">
-        <h1>Đăng nhập</h1>
+        <img src="/sanphamcuoikhoa_ngh/img/DALL·E 2025-03-09 14.15.41 - A sleek and modern logo for a football team called 'MindX Football Team'. The design should feature a bold and futuristic font for 'MindX', with the w.webp" alt="Logo" class="logo">
+        <h1>Đăng Nhập</h1>
         <form onsubmit="event.preventDefault(); signIn();">
-            <div class="input-container">
-                <input type="text" placeholder=" " required>
-                <label>Tên đăng nhập</label>
+            <div class="form-group">
+                <input type="text" id="username" placeholder=" " required>
+                <label for="username">Tên đăng nhập</label>
             </div>
-            <div class="input-container">
-                <input type="password" placeholder=" " required>
-                <label>Mật khẩu</label>
+            <div class="form-group">
+                <input type="password" id="password" placeholder=" " required>
+                <label for="password">Mật khẩu</label>
             </div>
-            <button type="submit">Đăng nhập</button>
+            <button type="submit">Đăng Nhập</button>
         </form>
-        <p>Chưa có tài khoản? <a href="signup.html">Đăng ký</a></p>
-        <a href="/interface/before.html" class="back-btn">Quay lại</a>
+        <p>Chưa có tài khoản? <a href="signup.html">Đăng Ký</a></p>
+        <a href="../interface/before.html" class="back-btn">Quay lại</a>
     </div>
+
     <div class="loading" id="loading">
         <img alt="Loading...">
     </div>
-    <div id="success-modal" class="modal">
-        <div class="modal-content">
+
+    <div id="success-modal" class="notification-modal">
+        <div class="notification-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <p id="modal-message">Đăng nhập thành công! Đang chuyển hướng...</p>
+            <i class="fas fa-check-circle notification-icon"></i>
+            <h2 class="notification-title">Đăng Nhập Thành Công!</h2>
+            <p class="notification-message" id="modal-message">Chào mừng bạn đã quay trở lại!</p>
+            <button class="notification-button" onclick="closeModal()">Tiếp Tục</button>
         </div>
     </div>
-    <script src="/interface/script.js"></script>
+
     <script>
-        function signIn() {
-            // Show success modal
-            const successModal = document.getElementById('success-modal');
-            const modalMessage = document.getElementById('modal-message');
-            modalMessage.textContent = 'Đăng nhập thành công! Đang chuyển hướng...';
-            successModal.style.display = 'block';
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
 
-            // Show loading effect after success modal
-            setTimeout(() => {
-                successModal.style.display = 'none';
-                document.getElementById('loading').style.display = 'block';
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
 
-                setTimeout(() => {
-                    window.location.href = '/interface/after.html';
-                }, 2000); // Redirect after 2 seconds
-            }, 2000); // Show loading after 2 seconds
+        function showModal(message) {
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('success-modal').style.display = 'block';
         }
 
         function closeModal() {
             document.getElementById('success-modal').style.display = 'none';
-            document.getElementById('loading').style.display = 'none';
+        }
+
+        function signIn() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username && password) {
+                document.querySelector('.notification-title').textContent = 'Đăng Nhập Thành Công!';
+                document.querySelector('.notification-icon').className = 'fas fa-check-circle notification-icon';
+                showModal('Chào mừng bạn đã quay trở lại!');
+                
+                setTimeout(() => {
+                    closeModal();
+                    showLoading();
+                    
+                    setTimeout(() => {
+                        window.location.href = '../interface/news.html';
+                    }, 1500);
+                }, 1500);
+            }
         }
     </script>
 </body>

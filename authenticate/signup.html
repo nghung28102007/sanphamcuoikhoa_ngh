@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Ký - MindX Football</title>
-    <link rel="stylesheet" href="/interface/styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
             background-color: #ffffff;
             color: #000000;
             text-align: center;
-            animation: slide-in 1s ease-out;
         }
         .signup-container {
             max-width: 400px;
@@ -29,12 +29,31 @@
             margin-bottom: 20px;
             color: #00529f;
         }
-        input[type="text"], input[type="email"], input[type="password"] {
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .form-group input {
             width: calc(100% - 20px);
             padding: 10px;
-            margin: 10px 0;
             border: 1px solid #e0e0e0;
             border-radius: 5px;
+            outline: none;
+        }
+        .form-group label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #aaa;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label {
+            top: -20px; /* Adjusted to rise higher */
+            left: 10px;
+            font-size: 12px;
+            color: #00529f;
         }
         button {
             width: 100%;
@@ -91,16 +110,6 @@
             text-decoration: none;
             cursor: pointer;
         }
-        .requirements p {
-            margin: 5px 0;
-            font-size: 12px;
-        }
-        .valid {
-            color: green;
-        }
-        .invalid {
-            color: red;
-        }
         .loading {
             display: none;
             position: fixed;
@@ -125,91 +134,78 @@
 </head>
 <body>
     <div class="signup-container">
-        <img src="/img/DALL·E 2025-03-09 14.15.41 - A sleek and modern logo for a football team called 'MindX Football Team'. The design should feature a bold and futuristic font for 'MindX', with the w.webp" alt="Real Madrid Logo" class="logo">
+        <img src="/sanphamcuoikhoa_ngh/img/DALL·E 2025-03-09 14.15.41 - A sleek and modern logo for a football team called 'MindX Football Team'. The design should feature a bold and futuristic font for 'MindX', with the w.webp" alt="Logo" class="logo">
         <h1>Đăng Ký</h1>
         <form onsubmit="event.preventDefault(); signUp();">
-            <div class="input-container">
-                <input type="text" placeholder=" " required>
-                <label>Tên đăng nhập</label>
+            <div class="form-group">
+                <input type="text" id="username" placeholder=" " required>
+                <label for="username">Tên đăng nhập</label>
             </div>
-            <div class="input-container">
-                <input type="email" placeholder=" " required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-                <label>Email</label>
+            <div class="form-group">
+                <input type="email" id="email" placeholder=" " required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                <label for="email">Email</label>
             </div>
-            <div class="input-container">
-                <input type="password" id="password" placeholder=" " required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}">
-                <label>Mật khẩu</label>
-                <div id="password-requirements" class="requirements">
-                    <p id="length" class="invalid">Ít nhất 8 ký tự</p>
-                    <p id="uppercase" class="invalid">Ít nhất một chữ cái viết hoa</p>
-                    <p id="lowercase" class="invalid">Ít nhất một chữ cái viết thường</p>
-                    <p id="number" class="invalid">Ít nhất một chữ số</p>
-                    <p id="special" class="invalid">Ít nhất một ký tự đặc biệt (@$!%*?&)</p>
-                </div>
+            <div class="form-group">
+                <input type="password" id="password" placeholder=" " required>
+                <label for="password">Mật khẩu</label>
             </div>
-            <button type="submit" onclick="(signUp)">Đăng Ký</button>
+            <button type="submit">Đăng Ký</button>
         </form>
         <p>Đã có tài khoản? <a href="signin.html">Đăng Nhập</a></p>
-        <a href="/interface/before.html" class="back-btn">Quay lại</a>
+        <a href="../interface/before.html" class="back-btn">Quay lại</a>
     </div>
+
     <div class="loading" id="loading">
         <img alt="Loading...">
     </div>
-    <div id="success-modal" class="modal">
-        <div class="modal-content">
+
+    <div id="success-modal" class="notification-modal">
+        <div class="notification-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <p id="modal-message"></p>
+            <i class="fas fa-user-plus notification-icon"></i>
+            <h2 class="notification-title">Đăng Ký Thành Công!</h2>
+            <p class="notification-message" id="modal-message">Tài khoản của bạn đã được tạo thành công!</p>
+            <button class="notification-button" onclick="closeModal()">Tiếp Tục</button>
         </div>
     </div>
-    <script src="/interface/script.js"></script>
+
     <script>
-        const passwordInput = document.getElementById('password');
-        const lengthRequirement = document.getElementById('length');
-        const uppercaseRequirement = document.getElementById('uppercase');
-        const lowercaseRequirement = document.getElementById('lowercase');
-        const numberRequirement = document.getElementById('number');
-        const specialRequirement = document.getElementById('special');
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
 
-        passwordInput.addEventListener('input', function() {
-            const value = passwordInput.value;
-            lengthRequirement.classList.toggle('valid', value.length >= 8);
-            lengthRequirement.classList.toggle('invalid', value.length < 8);
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
 
-            uppercaseRequirement.classList.toggle('valid', /[A-Z]/.test(value));
-            uppercaseRequirement.classList.toggle('invalid', !/[A-Z]/.test(value));
-
-            lowercaseRequirement.classList.toggle('valid', /[a-z]/.test(value));
-            lowercaseRequirement.classList.toggle('invalid', !/[a-z]/.test(value));
-
-            numberRequirement.classList.toggle('valid', /\d/.test(value));
-            numberRequirement.classList.toggle('invalid', !/\d/.test(value));
-
-            specialRequirement.classList.toggle('valid', /[@$!%*?&]/.test(value));
-            specialRequirement.classList.toggle('invalid', !/[@$!%*?&]/.test(value));
-        });
-
-        function signUp() {
-            // Show success modal
-            const successModal = document.getElementById('success-modal');
-            const modalMessage = document.getElementById('modal-message');
-            modalMessage.textContent = 'Đăng ký thành công! Đang chuyển hướng đến trang đăng nhập...';
-            successModal.style.display = 'block';
-
-            // Show loading effect after success modal
-            setTimeout(() => {
-                successModal.style.display = 'none';
-                document.getElementById('loading').style.display = 'block';
-
-                setTimeout(() => {
-                    localStorage.setItem('isLoggedIn', 'true');
-                    window.location.href = 'signin.html';
-                }, 2000); // Redirect after 2 seconds
-            }, 2000); // Show loading after 2 seconds
+        function showModal(message) {
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('success-modal').style.display = 'block';
         }
 
         function closeModal() {
             document.getElementById('success-modal').style.display = 'none';
-            document.getElementById('loading').style.display = 'none';
+        }
+
+        function signUp() {
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (username && email && password) {
+                document.querySelector('.notification-title').textContent = 'Đăng Ký Thành Công!';
+                document.querySelector('.notification-icon').className = 'fas fa-user-plus notification-icon';
+                showModal('Tài khoản của bạn đã được tạo thành công!');
+                
+                setTimeout(() => {
+                    closeModal();
+                    showLoading();
+                    
+                    setTimeout(() => {
+                        window.location.href = 'signin.html';
+                    }, 1500);
+                }, 1500);
+            }
         }
     </script>
 </body>

@@ -2,17 +2,36 @@
 .navbar {
     display: flex;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #f8f9fa; /* Màu nền xám nhạt cho thanh điều hướng */
-    border-bottom: 1px solid #dee2e6; /* Đường viền xám nhạt */
+    padding: 15px 40px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
+.logo {
+    margin-right: 40px;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.1);
+}
+
+/* Hide extra-menu on mobile */
 .extra-menu {
     display: flex;
     justify-content: space-evenly;
     width: 78%;
 }
 
+/* Dropdown menu styles */
 .box {
     position: relative;
     width: fit-content;
@@ -23,8 +42,8 @@
     position: relative;
     width: 150px;
     height: fit-content;
-    background: #343a40; /* Màu nền xám đậm cho dropdown */
-    color: #ffffff; /* Màu chữ trắng */
+    background: #343a40;
+    color: #ffffff;
     font-size: 22px;
     display: flex;
     justify-content: center;
@@ -32,6 +51,11 @@
     border-radius: 5px;
     cursor: pointer;
     box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    transition: all 0.3s ease;
+}
+
+.dropdown:hover {
+    background: #2b3035;
 }
 
 .dropdown .left-icon,
@@ -41,7 +65,7 @@
     display: inline-block;
     width: 15px;
     height: 5px;
-    background: #ffffff; /* Màu trắng cho biểu tượng */
+    background: #ffffff;
     border-radius: 40px;
     transition: .5s;
 }
@@ -68,41 +92,35 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: auto; /* Điều chỉnh chiều cao để phù hợp với nội dung */
     margin-top: 63px;
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     visibility: hidden;
-    transition: .5s;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
 }
 
 .dropdown.active .items {
     visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .dropdown .items a {
     position: relative;
-    left: 100%;
+    left: 0;
     display: flex;
-    font-size: 20px;
-    background: #ffffff; /* Màu nền trắng cho các mục dropdown */
-    color: #343a40; /* Màu chữ xám đậm */
+    padding: 12px 20px;
+    font-size: 18px;
+    color: #343a40;
     text-decoration: none;
     border-radius: 5px;
-    padding: 10px 15px;
     margin-top: 2.5px;
-    z-index: 1;
+    transition: all 0.3s ease;
     overflow: hidden;
-    transition: .5s;
-    transition-delay: calc(60ms * var(--i));
-}
-
-.dropdown.active .items a {
-    left: 0;
-}
-
-.dropdown .items a:hover {
-    color: #ffffff; /* Màu chữ trắng khi hover */
-    background: #495057; /* Màu nền xám nhạt hơn khi hover */
 }
 
 .dropdown .items a span {
@@ -111,7 +129,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: #6c757d; /* Màu nền xám trung bình cho span */
+    background: #6c757d;
     z-index: -1;
     border-radius: inherit;
     transform: rotate(160deg);
@@ -119,8 +137,100 @@
     transition: .5s;
 }
 
+.dropdown .items a:hover {
+    color: #ffffff;
+    padding-left: 25px;
+}
+
 .dropdown .items a:hover span {
     transform: rotate(0deg);
+}
+
+/* Extra menu styles */
+.extra-menu {
+    display: flex;
+    gap: 30px;
+    margin-right: 40px;
+}
+
+.extra-menu a {
+    color: #333333;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.extra-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #343a40;
+    transition: width 0.3s ease;
+}
+
+.extra-menu a:hover {
+    color: #343a40;
+    transform: translateY(-2px);
+}
+
+.extra-menu a:hover::after {
+    width: 100%;
+}
+
+/* Sign in/out button styles */
+.signin button {
+    padding: 12px 25px;
+    background-color: #343a40;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.signin button:hover {
+    background-color: #2b3035;
+    transform: translateY(-2px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .logo {
+        margin-right: 20px;
+    }
+
+    .extra-menu {
+        display: none;
+    }
+
+    .box {
+        margin-right: auto;
+    }
+
+    .dropdown {
+        min-width: auto;
+        padding: 10px 20px;
+    }
+
+    .signin button {
+        padding: 10px 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .extra-menu {
+        display: flex;
+    }
 }
 
 @keyframes spin {
@@ -157,22 +267,6 @@
 
 body {
     animation: slide-in 2s ease-in;
-}
-
-
-
-/* Nút Đăng nhập */
-.signin button {
-    background-color: #343a40; /* Màu nền xám đậm cho nút */
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.signin button:hover {
-    background-color: #495057; /* Màu xám nhạt hơn khi hover */
 }
 
 a {
@@ -221,10 +315,6 @@ a {
     color: black;
     text-decoration: none;
     cursor: pointer;
-}
-
-.logo {
-    margin-right: 20px; /* Thêm khoảng cách bên phải của logo */
 }
 
 .input-container {
@@ -284,4 +374,150 @@ input:valid {
 
 .requirements .invalid {
     color: red;
+}
+
+.notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #28a745; /* Green background */
+    color: white;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.notification.fade-out {
+    opacity: 0;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #28a745; /* Green background */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* Kiểu dáng cho hộp thoại thông báo */
+.notification-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.notification-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 30px;
+    width: 300px;
+    height: 300px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.notification-icon {
+    font-size: 60px;
+    color: #28a745;
+    margin-bottom: 20px;
+    animation: scaleIn 0.5s ease-out;
+}
+
+.notification-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.notification-message {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.notification-button {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.notification-button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 24px;
+    color: #aaa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #333;
+    transform: rotate(90deg);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popIn {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+    }
+    60% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
